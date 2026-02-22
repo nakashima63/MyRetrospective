@@ -2,6 +2,11 @@ spring:
   application:
     name: myretro-backend
 
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/myretro}
+    username: ${SPRING_DATASOURCE_USERNAME:myretro}
+    password: ${SPRING_DATASOURCE_PASSWORD:}
+
   jpa:
     open-in-view: false
     hibernate:
