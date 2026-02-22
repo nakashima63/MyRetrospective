@@ -1,1 +1,8 @@
 .env
+
+# IDE
+.vscode/
+.idea/
+
+# Vite cache
+frontend/.vite/
