@@ -12,9 +12,9 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -23,8 +23,11 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @Table(name = "users")
 @EntityListeners(AuditingEntityListener.class)
 @Getter
-@Setter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+/**
+ * ユーザーアカウントを表すエンティティ。
+ * メールアドレスとパスワードによる認証に使用する。
+ */
 public class User {
 
     @Id
@@ -50,4 +53,30 @@ public class User {
     @LastModifiedDate
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
+
+    /**
+     * 新規ユーザーを作成する。
+     *
+     * @param email        メールアドレス
+     * @param passwordHash ハッシュ化済みパスワード
+     * @param username     ユーザー名
+     */
+    public User(String email, String passwordHash, String username) {
+        this.email = email;
+        this.passwordHash = passwordHash;
+        this.username = username;
+    }
+
+    /**
+     * ユーザー情報を更新する。
+     *
+     * @param email        メールアドレス
+     * @param passwordHash ハッシュ化済みパスワード
+     * @param username     ユーザー名
+     */
+    public void update(String email, String passwordHash, String username) {
+        this.email = email;
+        this.passwordHash = passwordHash;
+        this.username = username;
+    }
 }

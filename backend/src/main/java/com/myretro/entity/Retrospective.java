@@ -15,9 +15,9 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -26,8 +26,11 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @Table(name = "retrospectives")
 @EntityListeners(AuditingEntityListener.class)
 @Getter
-@Setter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+/**
+ * 振り返りセッションを表すエンティティ。
+ * ユーザーごとに複数作成でき、KPT アイテムとアクションアイテムを保持する。
+ */
 public class Retrospective {
 
     @Id
@@ -56,4 +59,28 @@ public class Retrospective {
     @LastModifiedDate
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
+
+    /**
+     * 新規振り返りセッションを作成する。
+     *
+     * @param user        所有ユーザー
+     * @param title       タイトル
+     * @param description 説明（任意）
+     */
+    public Retrospective(User user, String title, String description) {
+        this.user = user;
+        this.title = title;
+        this.description = description;
+    }
+
+    /**
+     * 振り返りセッションの情報を更新する。
+     *
+     * @param title       タイトル
+     * @param description 説明（任意）
+     */
+    public void update(String title, String description) {
+        this.title = title;
+        this.description = description;
+    }
 }

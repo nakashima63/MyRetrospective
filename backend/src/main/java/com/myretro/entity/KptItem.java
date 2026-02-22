@@ -17,9 +17,9 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -28,8 +28,11 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @Table(name = "kpt_items")
 @EntityListeners(AuditingEntityListener.class)
 @Getter
-@Setter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+/**
+ * KPT（Keep / Problem / Try）の各項目を表すエンティティ。
+ * 振り返りセッションに紐づき、種別ごとに並び順を持つ。
+ */
 public class KptItem {
 
     @Id
@@ -60,4 +63,32 @@ public class KptItem {
     @LastModifiedDate
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
+
+    /**
+     * 新規 KPT アイテムを作成する。
+     *
+     * @param retrospective 所属する振り返りセッション
+     * @param type          KPT 種別（KEEP / PROBLEM / TRY）
+     * @param content       内容
+     * @param sortOrder     並び順
+     */
+    public KptItem(Retrospective retrospective, KptType type, String content, Integer sortOrder) {
+        this.retrospective = retrospective;
+        this.type = type;
+        this.content = content;
+        this.sortOrder = sortOrder;
+    }
+
+    /**
+     * KPT アイテムの情報を更新する。
+     *
+     * @param type      KPT 種別（KEEP / PROBLEM / TRY）
+     * @param content   内容
+     * @param sortOrder 並び順
+     */
+    public void update(KptType type, String content, Integer sortOrder) {
+        this.type = type;
+        this.content = content;
+        this.sortOrder = sortOrder;
+    }
 }

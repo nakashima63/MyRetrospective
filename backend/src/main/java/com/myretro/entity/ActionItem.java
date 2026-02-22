@@ -15,9 +15,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -26,8 +26,11 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @Table(name = "action_items")
 @EntityListeners(AuditingEntityListener.class)
 @Getter
-@Setter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+/**
+ * アクションアイテムを表すエンティティ。
+ * KPT の Try から派生し、ステータス管理と期限を持つ。
+ */
 public class ActionItem {
 
     @Id
@@ -58,4 +61,34 @@ public class ActionItem {
     @LastModifiedDate
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
+
+    /**
+     * 新規アクションアイテムを作成する。
+     *
+     * @param kptItem       派生元の KPT アイテム（任意）
+     * @param retrospective 所属する振り返りセッション
+     * @param content       内容
+     * @param status        ステータス（TODO / IN_PROGRESS / DONE）
+     * @param deadline      期限（任意）
+     */
+    public ActionItem(KptItem kptItem, Retrospective retrospective, String content, ActionStatus status, LocalDate deadline) {
+        this.kptItem = kptItem;
+        this.retrospective = retrospective;
+        this.content = content;
+        this.status = status;
+        this.deadline = deadline;
+    }
+
+    /**
+     * アクションアイテムの情報を更新する。
+     *
+     * @param content  内容
+     * @param status   ステータス（TODO / IN_PROGRESS / DONE）
+     * @param deadline 期限（任意）
+     */
+    public void update(String content, ActionStatus status, LocalDate deadline) {
+        this.content = content;
+        this.status = status;
+        this.deadline = deadline;
+    }
 }

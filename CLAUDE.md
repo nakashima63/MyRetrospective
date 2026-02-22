@@ -74,10 +74,39 @@ MyRetrospective/
 - ブランチ: `feature/#<issue番号>`, `fix/#<issue番号>`, `docs/*`
 - コミットメッセージ: Conventional Commits 形式
   - `feat:` 新機能、`fix:` バグ修正、`docs:` ドキュメント、`refactor:` リファクタ、`chore:` 設定・雑務
-- テストが通ることを確認してからコミットする
 
 ## テスト方針
 
-- **Backend**: JUnit 5 + MockMvc。Controller のテストは `@SpringBootTest` + `@AutoConfigureMockMvc`
+**TDD（テスト駆動開発）で進める。** t-wada 氏の思想に基づき、以下のワークフローを厳守する。
+
+### TDD サイクル（Red → Green → Refactor）
+
+1. **テストリスト作成** — Issue の要件から期待される振る舞いをリストアップする
+2. **Red** — リストから1つ選び、失敗するテストを書く
+3. **Green** — テストを通す最小限のコードを書く
+4. **Refactor** — テストが通った状態を維持しながら設計を改善する
+5. **繰り返す** — テストリストが空になるまで 2〜4 を繰り返す
+
+### 重要な原則
+
+- テストを全部先に書かない。**1つずつ** Red → Green → Refactor を回す
+- テストが通った状態を常に維持する（壊れたまま次に進まない）
+- AI エージェント（Claude Code）との開発では、TDD が**ガードレール**として機能する
+  - 既存の振る舞いが壊れていないことをテストで保証しながら進める
+
+### テストの粒度（Backend）
+
+| レイヤー | テスト手法 | Spring コンテキスト |
+|---|---|---|
+| Entity | 純粋な単体テスト。コンストラクタと update メソッドを必ずテストする | 不要 |
+| Service | `@ExtendWith(MockitoExtension.class)` でモック使用の単体テスト | 不要 |
+| Controller | `@SpringBootTest` + `@AutoConfigureMockMvc` | 必要 |
+
+### テストの粒度（Frontend）
+
 - **Frontend**: Vitest（予定）、E2E は Playwright（予定）
+
+### その他
+
 - テストプロファイルは `test`（H2 インメモリ DB を使用）
+- テストが通ることを確認してからコミットする
