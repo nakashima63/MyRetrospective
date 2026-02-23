@@ -62,6 +62,11 @@ MyRetrospective/
   - リソース単位の肥大化したサービスクラス（例: `RetrospectiveService`）は作らない
 - Java record を DTO に積極的に使用する
 - エラーレスポンスは `ErrorResponse` record で統一（`GlobalExceptionHandler` で処理）
+- **Javadoc を必ず記載する**
+  - すべての public クラス（class / interface / record / enum）にクラスレベル Javadoc を付ける
+  - すべての public メソッド・コンストラクタに Javadoc を付ける（`@param`, `@return`, `@throws` を適切に使用）
+  - テストクラスは対象外（Javadoc 不要）
+  - Lombok 生成メソッド（getter 等）は対象外
 
 ### フロントエンド
 

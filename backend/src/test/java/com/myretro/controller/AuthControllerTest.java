@@ -158,9 +158,9 @@ class AuthControllerTest {
 
         String accessToken = objectMapper.readTree(loginResponse).get("accessToken").asText();
 
-        // 保護エンドポイント（存在しないパスでも認証は通る → 404 or other, but NOT 401）
+        // 保護エンドポイントに認証付きでアクセス → 401 にならないこと
         mockMvc.perform(get("/api/retrospectives")
                         .header("Authorization", "Bearer " + accessToken))
-                .andExpect(status().isNotFound());  // 404 because endpoint doesn't exist yet, but NOT 401
+                .andExpect(status().isOk());
     }
 }
