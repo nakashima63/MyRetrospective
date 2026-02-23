@@ -12,3 +12,8 @@ spring:
 
   flyway:
     enabled: false
+
+jwt:
+  secret: test-secret-key-at-least-256-bits-long-for-hmac-sha256-testing
+  access-token-expiration: 900000
+  refresh-token-expiration: 604800000
