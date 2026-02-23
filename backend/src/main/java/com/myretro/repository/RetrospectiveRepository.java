@@ -4,12 +4,13 @@ import java.util.List;
 import java.util.Optional;
 
 import com.myretro.entity.Retrospective;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
- * 振り返りセッションのドメインリポジトリインターフェース。
- * Service 層はこのインターフェースに依存し、JPA 実装から分離する。
+ * 振り返りセッションのリポジトリ。
+ * Spring Data JPA が自動的にクエリメソッドを生成する。
  */
-public interface RetrospectiveRepository {
+public interface RetrospectiveRepository extends JpaRepository<Retrospective, Long> {
 
     /**
      * 指定された ID とユーザー ID に一致する振り返りを取得する。
@@ -27,19 +28,4 @@ public interface RetrospectiveRepository {
      * @return 振り返りのリスト
      */
     List<Retrospective> findByUserIdOrderByCreatedAtDesc(Long userId);
-
-    /**
-     * 振り返りを保存する。
-     *
-     * @param retrospective 保存する振り返りエンティティ
-     * @return 保存された振り返り
-     */
-    Retrospective save(Retrospective retrospective);
-
-    /**
-     * 振り返りを削除する。
-     *
-     * @param retrospective 削除する振り返りエンティティ
-     */
-    void delete(Retrospective retrospective);
 }

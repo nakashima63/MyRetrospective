@@ -5,7 +5,7 @@ import com.myretro.dto.CreateRetrospectiveRequest;
 import com.myretro.dto.UpdateRetrospectiveRequest;
 import com.myretro.entity.Retrospective;
 import com.myretro.entity.User;
-import com.myretro.repository.JpaRetrospectiveRepository;
+import com.myretro.repository.RetrospectiveRepository;
 import com.myretro.repository.RefreshTokenRepository;
 import com.myretro.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -37,7 +37,7 @@ class RetrospectiveControllerTest {
     private UserRepository userRepository;
 
     @Autowired
-    private JpaRetrospectiveRepository retrospectiveRepository;
+    private RetrospectiveRepository retrospectiveRepository;
 
     @Autowired
     private RefreshTokenRepository refreshTokenRepository;

@@ -9,8 +9,8 @@ import com.myretro.entity.KptItem;
 import com.myretro.entity.KptType;
 import com.myretro.entity.Retrospective;
 import com.myretro.entity.User;
-import com.myretro.repository.JpaKptItemRepository;
-import com.myretro.repository.JpaRetrospectiveRepository;
+import com.myretro.repository.KptItemRepository;
+import com.myretro.repository.RetrospectiveRepository;
 import com.myretro.repository.RefreshTokenRepository;
 import com.myretro.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -43,10 +43,10 @@ class KptItemControllerTest {
     private UserRepository userRepository;
 
     @Autowired
-    private JpaRetrospectiveRepository retrospectiveRepository;
+    private RetrospectiveRepository retrospectiveRepository;
 
     @Autowired
-    private JpaKptItemRepository kptItemRepository;
+    private KptItemRepository kptItemRepository;
 
     @Autowired
     private RefreshTokenRepository refreshTokenRepository;
