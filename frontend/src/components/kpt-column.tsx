@@ -87,7 +87,11 @@ export function KptColumn({
             key={item.id}
             item={item}
             readOnly={readOnly}
-            onUpdate={onUpdateItem ? (content) => onUpdateItem(item.id, content) : undefined}
+            onUpdate={
+              onUpdateItem
+                ? (content) => onUpdateItem(item.id, content)
+                : undefined
+            }
             onDelete={onDeleteItem ? () => onDeleteItem(item.id) : undefined}
           />
         ))}

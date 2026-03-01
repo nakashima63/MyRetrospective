@@ -84,7 +84,8 @@ export default function RetrospectiveDetail() {
                 <AlertDialogHeader>
                   <AlertDialogTitle>振り返りを削除しますか？</AlertDialogTitle>
                   <AlertDialogDescription>
-                    「{retrospective.title}」を削除します。この操作は取り消せません。
+                    「{retrospective.title}
+                    」を削除します。この操作は取り消せません。
                   </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
