@@ -1,7 +1,7 @@
 import { redirect } from "react-router";
 import type { LoaderFunctionArgs } from "react-router";
 import { isAuthenticated } from "@/lib/auth";
-import { listRetrospectives, getRetrospective } from "@/lib/api";
+import { listRetrospectives, getRetrospective } from "@/lib/api/retrospective";
 
 export function requireAuth() {
   if (!isAuthenticated()) {

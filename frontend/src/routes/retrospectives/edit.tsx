@@ -3,7 +3,11 @@ import { useLoaderData, useNavigate } from "react-router";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import { KptColumn } from "@/components/kpt-column";
-import { createKptItem, updateKptItem, deleteKptItem } from "@/lib/api";
+import {
+  createKptItem,
+  updateKptItem,
+  deleteKptItem,
+} from "@/lib/api/kpt-item";
 import type {
   RetrospectiveDetail,
   KptItem,
