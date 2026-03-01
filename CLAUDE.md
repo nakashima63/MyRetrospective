@@ -40,14 +40,23 @@ MyRetrospective/
 ├── frontend/           # React SPA
 ├── backend/            # Spring Boot API
 │   └── src/main/java/com/myretro/
-│       ├── config/         # SecurityConfig 等
-│       ├── controller/     # REST Controller
-│       ├── service/        # ユースケース単位のサービス
-│       ├── repository/     # JPA Repository
-│       ├── entity/         # JPA Entity
-│       ├── dto/            # Request/Response DTO
-│       ├── security/       # JWT フィルター・プロバイダー
-│       └── exception/      # 例外ハンドリング
+│       ├── config/              # SecurityConfig 等
+│       ├── controller/          # REST Controller
+│       │   ├── auth/            #   認証系
+│       │   ├── retrospective/   #   振り返り系
+│       │   └── kptitem/         #   KPT アイテム系
+│       ├── service/             # ユースケース単位のサービス
+│       │   ├── auth/            #   認証系
+│       │   ├── retrospective/   #   振り返り系
+│       │   └── kptitem/         #   KPT アイテム系
+│       ├── repository/          # JPA Repository
+│       ├── entity/              # JPA Entity
+│       ├── dto/                 # Request/Response DTO
+│       │   ├── auth/            #   認証系
+│       │   ├── retrospective/   #   振り返り系
+│       │   └── kptitem/         #   KPT アイテム系
+│       ├── security/            # JWT フィルター・プロバイダー
+│       └── exception/           # 例外ハンドリング
 ├── docs/               # ドキュメント
 └── CLAUDE.md
 ```
@@ -57,11 +66,18 @@ MyRetrospective/
 ### バックエンド
 
 - **レイヤードアーキテクチャ**: Controller → Service → Repository のシンプルな構成
-- **サービスはユースケース単位で作成する（単一責務）**
-  - `CreateRetrospectiveService`, `ListRetrospectivesService` のように1クラス1ユースケース
-  - リソース単位の肥大化したサービスクラス（例: `RetrospectiveService`）は作らない
+- **Controller・Service ともにユースケース単位で作成する（単一責務）**
+  - 1 Controller = 1 エンドポイント（public メソッドは `handle()` のみ）
+  - `CreateRetrospectiveController`, `ListRetrospectivesController` のように1クラス1エンドポイント
+  - Service も同様に `CreateRetrospectiveService`, `ListRetrospectivesService` のように1クラス1ユースケース
+  - リソース単位の肥大化したクラス（例: `RetrospectiveController`, `RetrospectiveService`）は作らない
 - Java record を DTO に積極的に使用する
 - エラーレスポンスは `ErrorResponse` record で統一（`GlobalExceptionHandler` で処理）
+- **Javadoc を必ず記載する**
+  - すべての public クラス（class / interface / record / enum）にクラスレベル Javadoc を付ける
+  - すべての public メソッド・コンストラクタに Javadoc を付ける（`@param`, `@return`, `@throws` を適切に使用）
+  - テストクラスは対象外（Javadoc 不要）
+  - Lombok 生成メソッド（getter 等）は対象外
 
 ### フロントエンド
 

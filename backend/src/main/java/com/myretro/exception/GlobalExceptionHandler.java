@@ -41,6 +41,18 @@ public class GlobalExceptionHandler {
                 .body(new ErrorResponse(401, "Unauthorized", ex.getMessage()));
     }
 
+    @ExceptionHandler(RetrospectiveNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleRetrospectiveNotFound(RetrospectiveNotFoundException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(new ErrorResponse(404, "Not Found", ex.getMessage()));
+    }
+
+    @ExceptionHandler(KptItemNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleKptItemNotFound(KptItemNotFoundException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(new ErrorResponse(404, "Not Found", ex.getMessage()));
+    }
+
     @ExceptionHandler(NoResourceFoundException.class)
     public ResponseEntity<ErrorResponse> handleNotFoundException(NoResourceFoundException ex) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
