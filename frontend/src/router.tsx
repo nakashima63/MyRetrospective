@@ -3,7 +3,13 @@ import Root from "@/routes/root";
 import Home from "@/routes/home";
 import Login from "@/routes/login";
 import Signup from "@/routes/signup";
-import { requireAuth } from "@/lib/loaders";
+import NewRetrospective from "@/routes/retrospectives/new";
+import EditRetrospective from "@/routes/retrospectives/edit";
+import {
+  requireAuth,
+  retrospectivesListLoader,
+  retrospectiveDetailLoader,
+} from "@/lib/loaders";
 
 export const router = createBrowserRouter([
   {
@@ -12,8 +18,18 @@ export const router = createBrowserRouter([
     children: [
       {
         index: true,
-        loader: requireAuth,
+        loader: retrospectivesListLoader,
         Component: Home,
+      },
+      {
+        path: "retrospectives/new",
+        loader: requireAuth,
+        Component: NewRetrospective,
+      },
+      {
+        path: "retrospectives/:id/edit",
+        loader: retrospectiveDetailLoader,
+        Component: EditRetrospective,
       },
     ],
   },

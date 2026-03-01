@@ -10,7 +10,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { signup } from "@/lib/api";
+import { signup } from "@/lib/api/auth";
 
 export default function Signup() {
   const navigate = useNavigate();

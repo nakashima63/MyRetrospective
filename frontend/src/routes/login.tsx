@@ -10,7 +10,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { login } from "@/lib/api";
+import { login } from "@/lib/api/auth";
 import { setTokens } from "@/lib/auth";
 
 export default function Login() {
