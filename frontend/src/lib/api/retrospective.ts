@@ -30,3 +30,10 @@ export async function getRetrospective(
   if (!response.ok) throw new Error("Failed to fetch retrospective");
   return response.json();
 }
+
+export async function deleteRetrospective(id: number): Promise<void> {
+  const response = await apiFetch(`/retrospectives/${id}`, {
+    method: "DELETE",
+  });
+  if (!response.ok) throw new Error("Failed to delete retrospective");
+}

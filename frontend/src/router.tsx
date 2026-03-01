@@ -4,6 +4,7 @@ import Home from "@/routes/home";
 import Login from "@/routes/login";
 import Signup from "@/routes/signup";
 import NewRetrospective from "@/routes/retrospectives/new";
+import RetrospectiveDetail from "@/routes/retrospectives/detail";
 import EditRetrospective from "@/routes/retrospectives/edit";
 import {
   requireAuth,
@@ -25,6 +26,11 @@ export const router = createBrowserRouter([
         path: "retrospectives/new",
         loader: requireAuth,
         Component: NewRetrospective,
+      },
+      {
+        path: "retrospectives/:id",
+        loader: retrospectiveDetailLoader,
+        Component: RetrospectiveDetail,
       },
       {
         path: "retrospectives/:id/edit",

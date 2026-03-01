@@ -5,6 +5,7 @@ import {
   CardHeader,
   CardTitle,
   CardDescription,
+  CardContent,
 } from "@/components/ui/card";
 import { Plus } from "lucide-react";
 import type { Retrospective } from "@/types/retrospective";
@@ -44,7 +45,7 @@ export default function Home() {
             <Card
               key={retro.id}
               className="cursor-pointer transition-shadow hover:shadow-md"
-              onClick={() => navigate(`/retrospectives/${retro.id}/edit`)}
+              onClick={() => navigate(`/retrospectives/${retro.id}`)}
             >
               <CardHeader>
                 <CardTitle className="text-lg">{retro.title}</CardTitle>
@@ -55,6 +56,13 @@ export default function Home() {
                   {new Date(retro.createdAt).toLocaleDateString("ja-JP")}
                 </p>
               </CardHeader>
+              <CardContent>
+                <div className="flex gap-3 text-xs">
+                  <span className="text-emerald-700">K: {retro.keepCount}</span>
+                  <span className="text-red-700">P: {retro.problemCount}</span>
+                  <span className="text-amber-700">T: {retro.tryCount}</span>
+                </div>
+              </CardContent>
             </Card>
           ))}
         </div>

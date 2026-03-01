@@ -29,7 +29,7 @@ class ListRetrospectivesServiceTest {
         List<Retrospective> retrospectives = List.of(
                 new Retrospective(user, "Sprint 2", null),
                 new Retrospective(user, "Sprint 1", "First sprint"));
-        given(retrospectiveRepository.findByUserIdOrderByCreatedAtDesc(1L)).willReturn(retrospectives);
+        given(retrospectiveRepository.findByUserIdWithKptItemsOrderByCreatedAtDesc(1L)).willReturn(retrospectives);
 
         List<Retrospective> result = listRetrospectivesService.list(1L);
 
@@ -39,7 +39,7 @@ class ListRetrospectivesServiceTest {
 
     @Test
     void 振り返りがない場合は空リストを返す() {
-        given(retrospectiveRepository.findByUserIdOrderByCreatedAtDesc(1L)).willReturn(List.of());
+        given(retrospectiveRepository.findByUserIdWithKptItemsOrderByCreatedAtDesc(1L)).willReturn(List.of());
 
         List<Retrospective> result = listRetrospectivesService.list(1L);
 

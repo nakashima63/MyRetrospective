@@ -29,14 +29,16 @@ const COLUMN_CONFIG: Record<
 interface KptColumnProps {
   type: KptType;
   items: KptItem[];
-  onAddItem: (content: string) => Promise<void>;
-  onUpdateItem: (itemId: number, content: string) => Promise<void>;
-  onDeleteItem: (itemId: number) => Promise<void>;
+  readOnly?: boolean;
+  onAddItem?: (content: string) => Promise<void>;
+  onUpdateItem?: (itemId: number, content: string) => Promise<void>;
+  onDeleteItem?: (itemId: number) => Promise<void>;
 }
 
 export function KptColumn({
   type,
   items,
+  readOnly,
   onAddItem,
   onUpdateItem,
   onDeleteItem,
@@ -51,7 +53,7 @@ export function KptColumn({
     if (!trimmed) return;
     setIsSubmitting(true);
     try {
-      await onAddItem(trimmed);
+      await onAddItem?.(trimmed);
       setNewContent("");
       setIsAdding(false);
     } finally {
@@ -84,13 +86,18 @@ export function KptColumn({
           <KptCard
             key={item.id}
             item={item}
-            onUpdate={(content) => onUpdateItem(item.id, content)}
-            onDelete={() => onDeleteItem(item.id)}
+            readOnly={readOnly}
+            onUpdate={
+              onUpdateItem
+                ? (content) => onUpdateItem(item.id, content)
+                : undefined
+            }
+            onDelete={onDeleteItem ? () => onDeleteItem(item.id) : undefined}
           />
         ))}
       </div>
 
-      {isAdding ? (
+      {!readOnly && isAdding ? (
         <div className="mt-3">
           <Textarea
             value={newContent}
@@ -122,7 +129,7 @@ export function KptColumn({
             </Button>
           </div>
         </div>
-      ) : (
+      ) : !readOnly ? (
         <Button
           variant="ghost"
           className={`mt-3 w-full justify-start ${config.color}`}
@@ -131,7 +138,7 @@ export function KptColumn({
           <Plus className="mr-1 h-4 w-4" />
           カードを追加
         </Button>
-      )}
+      ) : null}
     </div>
   );
 }
