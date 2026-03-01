@@ -25,6 +25,6 @@ public class ListRetrospectivesService {
      */
     @Transactional(readOnly = true)
     public List<Retrospective> list(Long userId) {
-        return retrospectiveRepository.findByUserIdOrderByCreatedAtDesc(userId);
+        return retrospectiveRepository.findByUserIdWithKptItemsOrderByCreatedAtDesc(userId);
     }
 }

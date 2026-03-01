@@ -5,6 +5,8 @@ import java.util.Optional;
 
 import com.myretro.entity.Retrospective;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 /**
  * 振り返りセッションのリポジトリ。
@@ -28,4 +30,13 @@ public interface RetrospectiveRepository extends JpaRepository<Retrospective, Lo
      * @return 振り返りのリスト
      */
     List<Retrospective> findByUserIdOrderByCreatedAtDesc(Long userId);
+
+    /**
+     * 指定ユーザーの振り返り一覧を KPT アイテムとともに取得する（作成日時の降順）。
+     *
+     * @param userId ユーザー ID
+     * @return 振り返りのリスト（KPT アイテムを含む）
+     */
+    @Query("SELECT DISTINCT r FROM Retrospective r LEFT JOIN FETCH r.kptItems WHERE r.user.id = :userId ORDER BY r.createdAt DESC")
+    List<Retrospective> findByUserIdWithKptItemsOrderByCreatedAtDesc(@Param("userId") Long userId);
 }

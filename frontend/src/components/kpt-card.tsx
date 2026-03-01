@@ -6,11 +6,12 @@ import type { KptItem } from "@/types/retrospective";
 
 interface KptCardProps {
   item: KptItem;
-  onUpdate: (content: string) => Promise<void>;
-  onDelete: () => Promise<void>;
+  readOnly?: boolean;
+  onUpdate?: (content: string) => Promise<void>;
+  onDelete?: () => Promise<void>;
 }
 
-export function KptCard({ item, onUpdate, onDelete }: KptCardProps) {
+export function KptCard({ item, readOnly, onUpdate, onDelete }: KptCardProps) {
   const [isEditing, setIsEditing] = useState(false);
   const [editContent, setEditContent] = useState(item.content);
   const [isDeleting, setIsDeleting] = useState(false);
@@ -26,7 +27,7 @@ export function KptCard({ item, onUpdate, onDelete }: KptCardProps) {
   const handleSave = async () => {
     const trimmed = editContent.trim();
     if (trimmed && trimmed !== item.content) {
-      await onUpdate(trimmed);
+      await onUpdate?.(trimmed);
     }
     setIsEditing(false);
   };
@@ -49,7 +50,7 @@ export function KptCard({ item, onUpdate, onDelete }: KptCardProps) {
   const handleDelete = async () => {
     setIsDeleting(true);
     try {
-      await onDelete();
+      await onDelete?.();
     } catch {
       setIsDeleting(false);
     }
@@ -84,6 +85,14 @@ export function KptCard({ item, onUpdate, onDelete }: KptCardProps) {
             保存
           </Button>
         </div>
+      </div>
+    );
+  }
+
+  if (readOnly) {
+    return (
+      <div className="rounded-md border bg-white p-3 shadow-sm">
+        <p className="whitespace-pre-wrap text-sm">{item.content}</p>
       </div>
     );
   }

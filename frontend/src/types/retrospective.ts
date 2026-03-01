@@ -13,6 +13,9 @@ export interface Retrospective {
   id: number;
   title: string;
   description: string | null;
+  keepCount: number;
+  problemCount: number;
+  tryCount: number;
   createdAt: string;
   updatedAt: string;
 }

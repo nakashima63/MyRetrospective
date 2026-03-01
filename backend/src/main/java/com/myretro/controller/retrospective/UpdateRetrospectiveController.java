@@ -8,6 +8,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -33,6 +34,7 @@ public class UpdateRetrospectiveController {
      * @return 更新された振り返り（200 OK）
      */
     @PutMapping("/{id}")
+    @Transactional
     public ResponseEntity<RetrospectiveResponse> handle(
             @AuthenticationPrincipal Long userId,
             @PathVariable Long id,
